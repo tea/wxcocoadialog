@@ -8,7 +8,7 @@ WX_DECLARE_STRING_HASH_MAP( wxArrayString, MultiDict );
 
 class OptionDict {
 public:
-	bool ParseArgs(int argc, wxChar* argv[]);
+	bool ParseArgs(const wxArrayString& args);
 	
 	bool HasOption(const wxString& key) const;
 	const wxString& GetOption(const wxString& key) const;

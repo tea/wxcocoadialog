@@ -2,19 +2,19 @@
 
 const wxString OptionDict::s_emptyString;
 
-bool OptionDict::ParseArgs(int argc, wxChar* argv[]) {
+bool OptionDict::ParseArgs(const wxArrayString& args) {
 	// 0 is app name and 1 is runmode so both are ignored
-	for (int i = 2; i < argc; ++i) {
+	for (unsigned int i = 2; i < args.GetCount(); ++i) {
 		// Get the option name
-		wxString option(argv[i]);
+		wxString option(args[i]);
 		if (!option.StartsWith(wxT("--"))) return false;
 		option = option.substr(2); // strip initial dashes
 
 		// Get Value(s)
 		wxArrayString values;
-		int i2 = i+1;
-		while (i2 < argc) {
-			const wxString tmp(argv[i2]);
+		unsigned int i2 = i+1;
+		while (i2 < args.GetCount()) {
+			const wxString tmp(args[i2]);
 			
 			if (!tmp.StartsWith(wxT("--"))) values.Add(tmp);
 			else break;	// We have reached the next option

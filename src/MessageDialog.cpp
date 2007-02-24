@@ -15,7 +15,6 @@
 #include "images/ipod.xpm"
 #include "images/person.xpm"
 #include "images/sound.xpm"
-#include "images/test.xpm"
 #include "images/x.xpm"
 
 
@@ -65,7 +64,6 @@ MessageDialog::MessageDialog(const OptionDict& options, bool doFloat)
 		else if (icon == wxT("ipod")) bmp = wxBitmap(ipod_xpm);
 		else if (icon == wxT("person")) bmp = wxBitmap(person_xpm);
 		else if (icon == wxT("sound")) bmp = wxBitmap(sound_xpm);
-		else if (icon == wxT("test")) bmp = wxBitmap(test_xpm);
 		else if (icon == wxT("x")) bmp = wxBitmap(x_xpm);
 	}
 	else if (options.HasOption(wxT("icon-file"))){
