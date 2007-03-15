@@ -44,7 +44,7 @@ RSC=rc.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I ".." /I "$(WXWIN28)\lib\vc_lib\mswu" /I "$(WXWIN28)\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D WINVER=0x400 /D "_MT" /D wxUSE_GUI=1 /D wxUSE_UNICODE=1 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /i "$(WXWIN28)\include" /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -96,6 +96,10 @@ SOURCE=.\CocoaDialog.rc
 # End Source File
 # Begin Source File
 
+SOURCE=.\ColourSelect.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Dropdown.cpp
 # End Source File
 # Begin Source File
@@ -113,6 +117,10 @@ SOURCE=.\MessageDialog.cpp
 # Begin Source File
 
 SOURCE=.\OptionDict.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PopupMenu.cpp
 # End Source File
 # Begin Source File
 

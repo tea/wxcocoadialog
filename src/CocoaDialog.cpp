@@ -14,6 +14,19 @@ bool CocoaDialogApp::OnInit()
 	if (utf8_args.GetCount() < 2) {
 		return OptionError();
 	}
+
+	m_parentWnd = NULL;
+/*  This code is currently disabled, as it will end up
+    setting focus to a random window if parentwnd is busy.
+	http://blogs.msdn.com/oldnewthing/archive/2004/02/27/81155.aspx
+#ifdef __WXMSW__
+	// Use currently active window as parent
+	HWND wnd = ::GetForegroundWindow();
+	if (wnd) {
+		m_parentWnd = new wxWindow();
+		m_parentWnd->AssociateHandle(wnd);
+	}
+#endif //__WXMSW__*/
 	
 	// Parse the options
 	const wxString runmode(utf8_args[1]);
@@ -23,20 +36,19 @@ bool CocoaDialogApp::OnInit()
 //	m_optionDict.Print();
 
 	//Initilizing image handlers
-	wxImage::AddHandler(new wxBMPHandler);
+	//wxImage::AddHandler(new wxBMPHandler);
 	wxImage::AddHandler(new wxPNGHandler);
 	wxImage::AddHandler(new wxJPEGHandler);
 	wxImage::AddHandler(new wxGIFHandler);
 	wxImage::AddHandler(new wxICOHandler);
-//	wxInitAllImageHandlers();
 
 	// Show the Dialog
 	if (runmode == wxT("inputbox")) {
 		// Verify mandatory options
 		if (!m_optionDict.HasOption(wxT("button1"))) return OptionError(wxT("At least one button has to be defined"));
 		
-		InputBox* dlg = new InputBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		InputBox* inputBox = new InputBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
+		SetTopWindow(inputBox);
 	}
 	else if (runmode == wxT("secure-inputbox")) {
 		// Verify mandatory options
@@ -44,15 +56,13 @@ bool CocoaDialogApp::OnInit()
 		
 		m_optionDict.SetOption(wxT("no-show"));
 		
-		InputBox* dlg = new InputBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new InputBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("standard-inputbox")) {
 		m_optionDict.SetOption(wxT("button1"), wxT("Ok"));
 		if (!m_optionDict.HasOption(wxT("no-cancel"))) m_optionDict.SetOption(wxT("button2"), wxT("Cancel"));
 
-		InputBox* dlg = new InputBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new InputBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("secure-standard-inputbox")) {
 		m_optionDict.SetOption(wxT("button1"), wxT("Ok"));
@@ -60,20 +70,17 @@ bool CocoaDialogApp::OnInit()
 
 		m_optionDict.SetOption(wxT("no-show"));
 
-		InputBox* dlg = new InputBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new InputBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("progressbar")) {
-		ProgressBar* dlg = new ProgressBar(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new ProgressBar(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("dropdown")) {
 		// Verify mandatory options
 		if (!m_optionDict.HasOption(wxT("button1"))) return OptionError(wxT("At least one button has to be defined."));
 		if (!m_optionDict.HasMultiOption(wxT("items"))) return OptionError(wxT("Need to define items for dropdown box."));
 
-		DropdownBox* dlg = new DropdownBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new DropdownBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("standard-dropdown")) {
 		m_optionDict.SetOption(wxT("button1"), wxT("Ok"));
@@ -81,49 +88,63 @@ bool CocoaDialogApp::OnInit()
 		// Verify mandatory options
 		if (!m_optionDict.HasMultiOption(wxT("items"))) return OptionError(wxT("Need to define items for dropdown box."));
 
-		DropdownBox* dlg = new DropdownBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
-	
+		new DropdownBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("msgbox")) {
 		if (m_optionDict.HasOption(wxT("help"))) return OptionHelp(wxT("msgbox"));
 		// Verify mandatory options
 		if (!m_optionDict.HasOption(wxT("button1"))) return OptionError(wxT("At least one button has to be defined"));
 		
-		MessageDialog* dlg = new MessageDialog(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new MessageDialog(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("ok-msgbox")) {
 		if (m_optionDict.HasOption(wxT("help"))) return OptionHelp(wxT("ok-msgbox"));
 		m_optionDict.SetOption(wxT("button1"), wxT("Ok"));
 		if (!m_optionDict.HasOption(wxT("no-cancel"))) m_optionDict.SetOption(wxT("button2"), wxT("Cancel"));
 		
-		MessageDialog* dlg = new MessageDialog(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new MessageDialog(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("yesno-msgbox")) {
 		if (m_optionDict.HasOption(wxT("help"))) return OptionHelp(wxT("yesno-msgbox"));
 		m_optionDict.SetOption(wxT("button1"), wxT("Yes"));
 		m_optionDict.SetOption(wxT("button2"), wxT("No"));
 		
-		MessageDialog* dlg = new MessageDialog(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new MessageDialog(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("textbox")) {
 		if (m_optionDict.HasOption(wxT("help"))) return OptionHelp(wxT("textbox"));
 		// Verify mandatory options
 		if (!m_optionDict.HasOption(wxT("button1"))) return OptionError(wxT("At least one button has to be defined"));
 		
-		InputBox* dlg = new InputBox(m_optionDict, m_optionDict.HasOption(wxT("float")));
-		SetTopWindow(dlg);
+		new InputBox(m_parentWnd, m_optionDict, m_optionDict.HasOption(wxT("float")));
 	}
 	else if (runmode == wxT("fileselect") || runmode == wxT("filesave")) {
 		ShowFileDialog();
 		return false; // end program
 	}
+	else if (runmode == wxT("colourselect") || runmode == wxT("colorselect")) {
+		ShowColourDialog();
+		return false; // end program
+	}
+	else if (runmode == wxT("menu")) {
+		ShowPopupMenu();
+		return false; // end program
+	}
 	else return OptionError(wxT("Unknown runmode."));
 
+	wxLogDebug(wxT("wxCD done"));
+
 	return true;
+}
+
+int CocoaDialogApp::OnExit() {
+	if (m_parentWnd) {
+		m_parentWnd->DissociateHandle();
+		delete m_parentWnd;
+	}
+	wxLogDebug(wxT("wxCD exit done"));
+
+	return wxApp::OnExit();
 }
 
 bool CocoaDialogApp::OptionError(const wxString& error) const {

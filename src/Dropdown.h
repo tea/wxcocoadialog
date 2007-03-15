@@ -5,7 +5,7 @@
 
 class DropdownBox : public wxDialog {
 public:
-	DropdownBox(const OptionDict& options, bool doFloat);
+	DropdownBox(wxWindow* parent, const OptionDict& options, bool doFloat);
 
 private:
 	void PrintValue() const;

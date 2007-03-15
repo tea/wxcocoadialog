@@ -5,7 +5,7 @@
 
 class MessageDialog : public wxDialog {
 public:
-	MessageDialog(const OptionDict& options, bool doFloat);
+	MessageDialog(wxWindow* parent, const OptionDict& options, bool doFloat);
 
 private:
 	// Event handlers

@@ -35,8 +35,8 @@ BEGIN_EVENT_TABLE(MessageDialog, wxDialog)
 END_EVENT_TABLE()
 
 
-MessageDialog::MessageDialog(const OptionDict& options, bool doFloat) 
-: wxDialog(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, doFloat ? wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP : wxDEFAULT_DIALOG_STYLE), m_options(options) {
+MessageDialog::MessageDialog(wxWindow* parent, const OptionDict& options, bool doFloat) 
+: wxDialog(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, doFloat ? wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP : wxDEFAULT_DIALOG_STYLE), m_options(options) {
 	// Set the dialog title
 	const wxString title = options.GetOption(wxT("title"));
 	SetTitle(options.GetOption(wxT("title")));

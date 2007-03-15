@@ -35,31 +35,37 @@ void CocoaDialogApp::ShowFileDialog() const {
 	if (m_optionDict.GetRunmode() == wxT("fileselect")) {
 		if (m_optionDict.HasOption(wxT("select-only-directories"))) {
 			// OpenDirectory Dialog
-			wxDirDialog dlg(NULL, msg, defaultdir);
+			wxDirDialog dlg(m_parentWnd, msg, defaultdir);
 			if (dlg.ShowModal() == wxID_OK) {
 				paths.Add(dlg.GetPath());
 			}
+
+			if (m_parentWnd) dlg.Reparent(NULL); // avoid ref to non wxWidgets window
 		}
 		else {
 			// OpenFile Dialog
 			int style = wxFD_OPEN;
 			if (m_optionDict.HasOption(wxT("select-multiple"))) style |= wxFD_MULTIPLE;
 
-			wxFileDialog dlg(NULL, msg, defaultdir, defaultfile, wildcard, style);
+			wxFileDialog dlg(m_parentWnd, msg, defaultdir, defaultfile, wildcard, style);
 			if (dlg.ShowModal() == wxID_OK) {
 				if (style & wxFD_MULTIPLE) dlg.GetPaths(paths);
 				else paths.Add(dlg.GetPath());
 			}
+
+			if (m_parentWnd) dlg.Reparent(NULL); // avoid ref to non wxWidgets window
 		}
 	}
 	else if (m_optionDict.GetRunmode() == wxT("filesave")) {
 		// FileSave Dialog
 		const int style = wxFD_SAVE;
 
-		wxFileDialog dlg(NULL, msg, defaultdir, defaultfile, wildcard, style);
+		wxFileDialog dlg(m_parentWnd, msg, defaultdir, defaultfile, wildcard, style);
 		if (dlg.ShowModal() == wxID_OK) {
 			paths.Add(dlg.GetPath());
 		}
+
+		if (m_parentWnd) dlg.Reparent(NULL); // avoid ref to non wxWidgets window
 	}
 
 	// Print paths to stdout

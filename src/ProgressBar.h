@@ -5,7 +5,7 @@
 
 class ProgressBar : public wxDialog {
 public:
-	ProgressBar(const OptionDict& options, bool doFloat);
+	ProgressBar(wxWindow* parent, const OptionDict& options, bool doFloat);
 
 private:
 	// Event handlers

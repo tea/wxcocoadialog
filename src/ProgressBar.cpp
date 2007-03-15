@@ -13,8 +13,8 @@ BEGIN_EVENT_TABLE(ProgressBar, wxDialog)
 	EVT_BUTTON(wxID_CANCEL, ProgressBar::OnCancel)
 END_EVENT_TABLE()
 
-ProgressBar::ProgressBar(const OptionDict& options, bool doFloat) 
-: wxDialog(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, doFloat ? wxCAPTION|wxSTAY_ON_TOP : wxCAPTION),
+ProgressBar::ProgressBar(wxWindow* parent, const OptionDict& options, bool doFloat) 
+: wxDialog(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, doFloat ? wxCAPTION|wxSTAY_ON_TOP : wxCAPTION),
   m_options(options) {
 	// Set the dialog title
 	const wxString title = options.GetOption(wxT("title"));

@@ -5,7 +5,7 @@
 
 class InputBox : public wxDialog {
 public:
-	InputBox(const OptionDict& options, bool doFloat);
+	InputBox(wxWindow* parent, const OptionDict& options, bool doFloat);
 
 private:
 	// Event handlers
