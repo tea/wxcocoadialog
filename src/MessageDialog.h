@@ -9,6 +9,7 @@ public:
 
 private:
 	// Event handlers
+	void OnClose(wxCloseEvent& event);
 	void OnButton1(wxCommandEvent& event);
 	void OnButton2(wxCommandEvent& event);
 	void OnButton3(wxCommandEvent& event);

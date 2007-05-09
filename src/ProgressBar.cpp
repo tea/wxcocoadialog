@@ -9,6 +9,7 @@ enum {
 };
 
 BEGIN_EVENT_TABLE(ProgressBar, wxDialog)
+	EVT_CLOSE(ProgressBar::OnClose)
 	EVT_TEXT(LINEREADER, ProgressBar::OnLineRead)
 	EVT_BUTTON(wxID_CANCEL, ProgressBar::OnCancel)
 END_EVENT_TABLE()
@@ -54,6 +55,22 @@ ProgressBar::ProgressBar(wxWindow* parent, const OptionDict& options, bool doFlo
 	new LineReaderThread(*this);
 }
 
+void ProgressBar::OnClose(wxCloseEvent& WXUNUSED(event)) {
+	// If we have a parent, we want to pass focus to it before closing
+	// (otherwise the system may activate a random window)
+	wxWindow* parent = GetParent();
+	if (parent) {
+#ifdef __WXMSW__
+		// Activate the parent frame
+		HWND hwnd = GetHwndOf(parent);
+		::SetForegroundWindow(hwnd);
+		::SetFocus(hwnd);
+#endif //__WXMSW__
+	}
+	
+	Destroy(); // Dlg is top window, so this ends the app.
+}
+
 void ProgressBar::OnLineRead(wxCommandEvent& event) {
 	const wxString& line = event.GetString();
 
@@ -77,7 +94,7 @@ void ProgressBar::OnLineRead(wxCommandEvent& event) {
 }
 
 void ProgressBar::OnCancel(wxCommandEvent& WXUNUSED(event)) {
-	Destroy();
+	Close();
 }
 
 // ---- LineReaderThread -----------------------------------------------

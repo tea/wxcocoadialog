@@ -11,6 +11,7 @@ private:
 	void PrintValue() const;
 
 	// Event handlers
+	void OnClose(wxCloseEvent& event);
 	void OnSelection(wxCommandEvent& event);
 	void OnButton1(wxCommandEvent& event);
 	void OnButton2(wxCommandEvent& event);

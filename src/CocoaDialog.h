@@ -24,13 +24,6 @@ private:
 	void ShowColourDialog() const;
 	void ShowPopupMenu() const;
 
-#ifdef __WXMSW__
-	// Utility functions
-	static wxString WinPathToCygwin(const wxFileName& path);
-	static wxString CygwinPathToWin(const wxString& path);
-	static wxString GetCygwinDir();
-#endif // __WXMSW__
-	
 	// Member variables
 	OptionDict m_optionDict;
 	wxWindow* m_parentWnd;

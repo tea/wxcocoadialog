@@ -9,6 +9,7 @@ enum {
 };
 
 BEGIN_EVENT_TABLE(InputBox, wxDialog)
+	EVT_CLOSE(InputBox::OnClose)
 	EVT_BUTTON(CTRL_BUTTON1, InputBox::OnButton1)
 	EVT_BUTTON(CTRL_BUTTON2, InputBox::OnButton2)
 	EVT_BUTTON(wxID_CANCEL, InputBox::OnButton2)
@@ -94,6 +95,22 @@ InputBox::InputBox(wxWindow* parent, const OptionDict& options, bool doFloat)
 	Show();
 }
 
+void InputBox::OnClose(wxCloseEvent& WXUNUSED(event)) {
+	// If we have a parent, we want to pass focus to it before closing
+	// (otherwise the system may activate a random window)
+	wxWindow* parent = GetParent();
+	if (parent) {
+#ifdef __WXMSW__
+		// Activate the parent frame
+		HWND hwnd = GetHwndOf(parent);
+		::SetForegroundWindow(hwnd);
+		::SetFocus(hwnd);
+#endif //__WXMSW__
+	}
+	
+	Destroy(); // Dlg is top window, so this ends the app.
+}
+
 void InputBox::OnButton1(wxCommandEvent& WXUNUSED(event)) {
 	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button1->GetLabel().mb_str(wxConvUTF8));
 	else printf("1\n");
@@ -101,7 +118,7 @@ void InputBox::OnButton1(wxCommandEvent& WXUNUSED(event)) {
 	printf(m_inputBox->GetValue().mb_str(wxConvUTF8));
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnButton2(wxCommandEvent& WXUNUSED(event)) {
@@ -111,7 +128,7 @@ void InputBox::OnButton2(wxCommandEvent& WXUNUSED(event)) {
 	printf(m_inputBox->GetValue().mb_str(wxConvUTF8));
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnButton3(wxCommandEvent& WXUNUSED(event)) {
@@ -121,7 +138,7 @@ void InputBox::OnButton3(wxCommandEvent& WXUNUSED(event)) {
 	printf(m_inputBox->GetValue().mb_str(wxConvUTF8));
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
@@ -129,5 +146,5 @@ void InputBox::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
 	else printf("0");
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }

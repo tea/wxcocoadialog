@@ -1,4 +1,5 @@
 #include "CocoaDialog.h"
+#include "Util.h"
 
 void CocoaDialogApp::ShowFileDialog() const {
 

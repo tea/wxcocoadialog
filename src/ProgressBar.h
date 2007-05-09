@@ -9,6 +9,7 @@ public:
 
 private:
 	// Event handlers
+	void OnClose(wxCloseEvent& event);
 	void OnLineRead(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	DECLARE_EVENT_TABLE()

@@ -64,9 +64,14 @@ void CocoaDialogApp::ShowPopupMenu() const {
 		if (!m_optionDict.HasOption(wxT("no-newline"))) printf("\n");
 	}
 	
+	// If we have a parent, we want to pass focus to it before closing
+	// (otherwise the system may activate a random window)
 	if (m_parentWnd) {
-		dlg.Reparent(NULL); // avoid ref to non wxWidgets window
-		m_parentWnd->DissociateHandle();
-		delete m_parentWnd;
+#ifdef __WXMSW__
+		// Activate the parent frame
+		HWND hwnd = GetHwndOf(m_parentWnd);
+		::SetForegroundWindow(hwnd);
+		::SetFocus(hwnd);
+#endif //__WXMSW__
 	}
 }

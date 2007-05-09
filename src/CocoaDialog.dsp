@@ -108,6 +108,14 @@ SOURCE=.\FileSelect.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\HtmlDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IEHtmlWin.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\InputBox.cpp
 # End Source File
 # Begin Source File
@@ -125,6 +133,14 @@ SOURCE=.\PopupMenu.cpp
 # Begin Source File
 
 SOURCE=.\ProgressBar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Util.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\wxactivex.cpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -224,6 +240,14 @@ SOURCE=.\Dropdown.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\HtmlDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IEHtmlWin.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InputBox.h
 # End Source File
 # Begin Source File
@@ -237,6 +261,14 @@ SOURCE=.\OptionDict.h
 # Begin Source File
 
 SOURCE=.\ProgressBar.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Util.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\wxactivex.h
 # End Source File
 # End Group
 # End Target

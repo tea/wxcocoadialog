@@ -27,6 +27,7 @@ enum {
 };
 
 BEGIN_EVENT_TABLE(MessageDialog, wxDialog)
+	EVT_CLOSE(MessageDialog::OnClose)
 	EVT_BUTTON(CTRL_BUTTON1, MessageDialog::OnButton1)
 	EVT_BUTTON(CTRL_BUTTON2, MessageDialog::OnButton2)
 	EVT_BUTTON(wxID_CANCEL, MessageDialog::OnButton2)
@@ -130,13 +131,29 @@ MessageDialog::MessageDialog(wxWindow* parent, const OptionDict& options, bool d
 	Show();
 }
 
+void MessageDialog::OnClose(wxCloseEvent& WXUNUSED(event)) {
+	// If we have a parent, we want to pass focus to it before closing
+	// (otherwise the system may activate a random window)
+	wxWindow* parent = GetParent();
+	if (parent) {
+#ifdef __WXMSW__
+		// Activate the parent frame
+		HWND hwnd = GetHwndOf(parent);
+		::SetForegroundWindow(hwnd);
+		::SetFocus(hwnd);
+#endif //__WXMSW__
+	}
+	
+	Destroy(); // Dlg is top window, so this ends the app.
+}
+
 void MessageDialog::OnButton1(wxCommandEvent& WXUNUSED(event)) {
 	if (m_options.HasOption(wxT("string-output"))) printf("%s", m_button1->GetLabel().mb_str(wxConvUTF8));
 	else printf("1");
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnButton2(wxCommandEvent& WXUNUSED(event)) {
@@ -145,7 +162,7 @@ void MessageDialog::OnButton2(wxCommandEvent& WXUNUSED(event)) {
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnButton3(wxCommandEvent& WXUNUSED(event)) {
@@ -153,7 +170,7 @@ void MessageDialog::OnButton3(wxCommandEvent& WXUNUSED(event)) {
 	else printf("3");
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
@@ -161,5 +178,5 @@ void MessageDialog::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
 	else printf("0");
 
 	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
-	Destroy(); // Dlg is top window, so this ends the app.
+	Close(); // Dlg is top window, so this ends the app.
 }
