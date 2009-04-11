@@ -240,7 +240,7 @@ bool CocoaDialogApp::OptionHelp(const wxString& runmode) const {
 }
 
 
-main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 	// To be compatible with cygwin, we want to avoid lf->crlf conversion
 	_setmode( _fileno( stdout ), _O_BINARY );
 
@@ -256,5 +256,3 @@ main(int argc, char* argv[]) {
 	
 	return 0;
 }
-
-
