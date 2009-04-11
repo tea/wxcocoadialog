@@ -125,3 +125,4 @@ void* ProgressBar::LineReaderThread::Entry() {
 
 	return NULL;
 }
+

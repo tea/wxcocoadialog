@@ -3,8 +3,11 @@
 */
 #ifndef _IEHTMLWIN_H_
 #define _IEHTMLWIN_H_
+
+#if defined(_MSC_VER)
 #pragma warning( disable : 4101 4786)
 #pragma warning( disable : 4786)
+#endif
 
 
 #include <wx/setup.h>

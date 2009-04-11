@@ -91,15 +91,16 @@ bool OptionDict::GetMultiOption(const wxString& key, wxArrayString& values) cons
 
 void OptionDict::Print() const {
 	for (Dict::const_iterator p = m_optionDict.begin(); p != m_optionDict.end(); ++p) {
-		printf("%s: %s\n", p->first.mb_str(wxConvUTF8), p->second.mb_str(wxConvUTF8));
+		wxPrintf(wxT("%s: %s\n"), p->first.c_str(), p->second.c_str());
 	}
 	
 	for (MultiDict::const_iterator m = m_multiDict.begin(); m != m_multiDict.end(); ++m) {
-		printf("%s:\n", m->first.mb_str(wxConvUTF8));
+		wxPrintf(wxT("%s:\n"), m->first.c_str());
 
 		const wxArrayString& opts = m->second;
 		for (unsigned int i = 0; i < opts.GetCount(); ++i) {
-			printf("  %s\n", opts[i].mb_str(wxConvUTF8));
+			wxPrintf(wxT("  %s\n"), opts[i].c_str());
 		}
 	}
 }
+

@@ -3,7 +3,11 @@
 #include "ProgressBar.h"
 #include "Dropdown.h"
 #include "MessageDialog.h"
+#ifdef FEAT_BROWSER
 #include "HtmlDialog.h"
+#endif
+
+#include <stdio.h>
 
 IMPLEMENT_APP_NO_MAIN(CocoaDialogApp)
 
@@ -131,9 +135,11 @@ bool CocoaDialogApp::OnInit()
 		ShowPopupMenu();
 		return false; // end program
 	}
+#ifdef FEAT_BROWSER
 	else if (runmode == wxT("html")) {
 		new HtmlDialog(m_parentWnd, m_optionDict);
 	}
+#endif
 	else return OptionError(wxT("Unknown runmode."));
 
 	wxLogDebug(wxT("wxCD done"));
@@ -160,89 +166,91 @@ int CocoaDialogApp::OnExit() {
 }
 
 bool CocoaDialogApp::OptionError(const wxString& error) const {
-	printf("Invalid options:\n\n");
+	wxPrintf(wxT("Invalid options:\n\n"));
 	
-	if (!error.empty()) printf(error.mb_str(wxConvUTF8));
+	if (!error.empty()) wxPrintf(wxT("%s"), error.c_str());
 	
-	printf("\n");
+	wxPrintf(wxT("\n"));
 	OptionHelp();
 
 	return false;
 }
 
 bool CocoaDialogApp::OptionHelp(const wxString& runmode) const {
-	printf("HELP!\n\n");
+	wxPrintf(wxT("HELP!\n\n"));
 	if (!runmode.empty())
 	{
 		if (runmode == wxT("msgbox"))
 		{
-			printf("All available options:\n");
-			printf("\t--icon-file\n");
-			printf("\t--title\n");
-			printf("\t--button2\n");
-			printf("\t--string-output\n");
-			printf("\t--help\n");
-			printf("\t--debug\n");
-			printf("\t--icon\n");
-			printf("\t...\n");
+			wxPrintf(wxT("All available options:\n"));
+			wxPrintf(wxT("\t--icon-file\n"));
+			wxPrintf(wxT("\t--title\n"));
+			wxPrintf(wxT("\t--button2\n"));
+			wxPrintf(wxT("\t--string-output\n"));
+			wxPrintf(wxT("\t--help\n"));
+			wxPrintf(wxT("\t--debug\n"));
+			wxPrintf(wxT("\t--icon\n"));
+			wxPrintf(wxT("\t...\n"));
 		}
 		else if (runmode == wxT("ok-msgbox"))
 		{
-			printf("All available options:\n");
-			printf("\t--icon-file\n");
-			printf("\t--title\n");
-			printf("\t--button2\n");
-			printf("\t--string-output\n");
-			printf("\t--help\n");
-			printf("\t--debug\n");
-			printf("\t--icon\n");
-			printf("\t...\n");
+			wxPrintf(wxT("All available options:\n"));
+			wxPrintf(wxT("\t--icon-file\n"));
+			wxPrintf(wxT("\t--title\n"));
+			wxPrintf(wxT("\t--button2\n"));
+			wxPrintf(wxT("\t--string-output\n"));
+			wxPrintf(wxT("\t--help\n"));
+			wxPrintf(wxT("\t--debug\n"));
+			wxPrintf(wxT("\t--icon\n"));
+			wxPrintf(wxT("\t...\n"));
 		}
 		else if (runmode == wxT("yesno-msgbox"))
 		{
-			printf("All available options:\n");
-			printf("\t--icon-file\n");
-			printf("\t--title\n");
-			printf("\t--button2\n");
-			printf("\t--string-output\n");
-			printf("\t--help\n");
-			printf("\t--debug\n");
-			printf("\t--icon\n");
-			printf("\t...\n");
+			wxPrintf(wxT("All available options:\n"));
+			wxPrintf(wxT("\t--icon-file\n"));
+			wxPrintf(wxT("\t--title\n"));
+			wxPrintf(wxT("\t--button2\n"));
+			wxPrintf(wxT("\t--string-output\n"));
+			wxPrintf(wxT("\t--help\n"));
+			wxPrintf(wxT("\t--debug\n"));
+			wxPrintf(wxT("\t--icon\n"));
+			wxPrintf(wxT("\t...\n"));
 		}
 		else if (runmode == wxT("textbox"))
 		{
-			printf("\t--text\n");
-			printf("\t--text-from-file\n");
-			printf("\t--informative-text\n");
-			printf("\t--button1\n");
-			printf("\t--button2\n");
-			printf("\t--button3\n");
-			printf("\t--editable\n");
-			printf("\t--focus-textbox\n");
-			printf("\t--selected\n");
-			printf("\t--scroll-to\n");
-			printf("\t--float\n");
-			printf("\t--timeout\n");
+			wxPrintf(wxT("\t--text\n"));
+			wxPrintf(wxT("\t--text-from-file\n"));
+			wxPrintf(wxT("\t--informative-text\n"));
+			wxPrintf(wxT("\t--button1\n"));
+			wxPrintf(wxT("\t--button2\n"));
+			wxPrintf(wxT("\t--button3\n"));
+			wxPrintf(wxT("\t--editable\n"));
+			wxPrintf(wxT("\t--focus-textbox\n"));
+			wxPrintf(wxT("\t--selected\n"));
+			wxPrintf(wxT("\t--scroll-to\n"));
+			wxPrintf(wxT("\t--float\n"));
+			wxPrintf(wxT("\t--timeout\n"));
 		}
 	}
 
-	printf("Usage: Cocoadialog type [options]\n");
-	printf("\tAvailable types:\n");
-	printf("\t\tinputbox, secure-inputbox, standard-inputbox, secure-standard-inputbox\n");
-	printf("\t\tprogressbar, dropdown, standard-dropdown, msgbox\n");
-	printf("\tGlobal Options:\n");
-	printf("\t\t--help, --debug, --title, --width, --height\n");
-	printf("\t\t--string-output, --no-newline\n\n");
-//	printf("See ... for detailed documentation\n");
+	wxPrintf(wxT("Usage: Cocoadialog type [options]\n"));
+	wxPrintf(wxT("\tAvailable types:\n"));
+	wxPrintf(wxT("\t\tinputbox, secure-inputbox, standard-inputbox, secure-standard-inputbox\n"));
+	wxPrintf(wxT("\t\tprogressbar, dropdown, standard-dropdown, msgbox\n"));
+	wxPrintf(wxT("\tGlobal Options:\n"));
+	wxPrintf(wxT("\t\t--help, --debug, --title, --width, --height\n"));
+	wxPrintf(wxT("\t\t--string-output, --no-newline\n\n"));
+//	wxPrintf(wxT("See ... for detailed documentation\n"));
 
 	return false;
 }
 
 
 int main(int argc, char* argv[]) {
+#ifdef _WIN32
 	// To be compatible with cygwin, we want to avoid lf->crlf conversion
 	_setmode( _fileno( stdout ), _O_BINARY );
+#endif
 
 	// We want to keep the ansi versions for the arguments so
 	// that we can convert them from utf8.
@@ -252,7 +260,8 @@ int main(int argc, char* argv[]) {
 
 	// Start by initializing wxWidgets.
 	// this is needed as we do not have a main wxApp class.
-	wxEntry(::GetModuleHandle(NULL));
+	wxEntry(argc, argv);
 	
 	return 0;
 }
+

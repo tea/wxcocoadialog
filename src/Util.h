@@ -12,3 +12,4 @@
 #endif // __WXMSW__
 
 #endif //__CD_UTIL_H__
+

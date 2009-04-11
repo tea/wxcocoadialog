@@ -3,6 +3,10 @@
 
 #include "wx/wxprec.h" // For compilers that support precompilation, includes "wx/wx.h".
 
+#ifndef WX_PRECOMP
+  #include <wx/wx.h>
+#endif
+
 WX_DECLARE_STRING_HASH_MAP( wxString, Dict );
 WX_DECLARE_STRING_HASH_MAP( wxArrayString, MultiDict );
 
@@ -33,3 +37,4 @@ private:
 };
 
 #endif //__OPTIONDICT_H__
+

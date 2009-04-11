@@ -106,8 +106,8 @@ void HtmlDialog::OnMSHTMLBeforeNavigate2X(wxActiveXEvent& event) {
 		// Remove trailing '/' (added by ie)
 		if (output.EndsWith(wxT("/"))) output.RemoveLast();
 
-		printf("%s", output.mb_str(wxConvUTF8));
-		if (!m_optionDict.HasOption(wxT("no-newline"))) printf("\n");
+		wxPrintf(wxT("%s"), output.c_str());
+		if (!m_optionDict.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
 
 		// Don't try to open it in browser
 		event[wxT("Cancel")] = true;

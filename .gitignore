@@ -21,6 +21,7 @@ _ReSharper*
 .DS_Store
 
 # Linux stuff
-*.o
-*.d
-e
+src/.objs.debug/
+src/.objs.release/
+src/CocoaDialog
+

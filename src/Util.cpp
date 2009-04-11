@@ -90,3 +90,4 @@ wxString GetCygwinDir() { // static
 }
 
 #endif // __WXMSW__
+

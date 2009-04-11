@@ -79,7 +79,8 @@ void CocoaDialogApp::ShowFileDialog() const {
 			path = WinPathToCygwin(fn);
 #endif // __WXMSW__
 			
-			printf("%s", path.mb_str(wxConvUTF8));
+			wxPrintf(wxT("%s"), path.c_str());
 		}
 	}
 }
+

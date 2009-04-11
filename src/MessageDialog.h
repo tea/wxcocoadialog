@@ -28,3 +28,4 @@ private:
 };
 
 #endif //__MESSAGEDIALOG_H__
+
