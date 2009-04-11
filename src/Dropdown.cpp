@@ -1,4 +1,5 @@
 #include "Dropdown.h"
+#include "CloseOnEscHandler.h"
 
 // Ctrl id's
 enum {
@@ -41,6 +42,7 @@ DropdownBox::DropdownBox(wxWindow* parent, const OptionDict& options, bool doFlo
 
 	// Initial state
 	m_dropdownBox->SetSelection(0);
+	m_dropdownBox->PushEventHandler(new CloseOnEscHandler(this));
 	
 	// Create layout
 	wxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -72,6 +74,10 @@ DropdownBox::DropdownBox(wxWindow* parent, const OptionDict& options, bool doFlo
 
 	Centre();
 	Show();
+}
+
+DropdownBox::~DropdownBox(){
+	m_dropdownBox->PopEventHandler(true);
 }
 
 void DropdownBox::PrintValue() const {

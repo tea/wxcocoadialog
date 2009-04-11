@@ -12,9 +12,8 @@ wxArrayString CocoaDialogApp::utf8_args;
 // 'Main program' equivalent: the program execution "starts" here
 bool CocoaDialogApp::OnInit()
 {	
-	if (utf8_args.GetCount() < 2) {
+	if (utf8_args.GetCount() < 2)
 		return OptionError();
-	}
 
 	m_parentWnd = NULL;
 	// This code is currently disabled, as it will end up

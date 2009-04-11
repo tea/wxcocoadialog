@@ -78,8 +78,6 @@ MessageDialog::MessageDialog(wxWindow* parent, const OptionDict& options, bool d
 		}
 	}
 
-
-
 	// Create controls
 	wxStaticText* informativeText = new wxStaticText(this, wxID_ANY, options.GetOption(wxT("informative-text")));
 	wxStaticText* mainText = new wxStaticText(this, wxID_ANY, options.GetOption(wxT("text")));

@@ -1,4 +1,5 @@
 #include "InputBox.h"
+#include "CloseOnEscHandler.h"
 
 // Ctrl id's
 enum {
@@ -57,6 +58,7 @@ InputBox::InputBox(wxWindow* parent, const OptionDict& options, bool doFloat)
 	}
 
 	m_inputBox->SetInsertionPoint(0);
+	m_inputBox->PushEventHandler(new CloseOnEscHandler(this));
 
 	m_button3 = new wxButton(this, CTRL_BUTTON3, options.GetOption(wxT("button3")));
 	m_button2 = new wxButton(this, CTRL_BUTTON2, options.GetOption(wxT("button2")));
@@ -93,6 +95,10 @@ InputBox::InputBox(wxWindow* parent, const OptionDict& options, bool doFloat)
 
 	Centre();
 	Show();
+}
+
+InputBox::~InputBox(){
+	m_inputBox->PopEventHandler(true);
 }
 
 void InputBox::OnClose(wxCloseEvent& WXUNUSED(event)) {
