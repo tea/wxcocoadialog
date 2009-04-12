@@ -112,40 +112,40 @@ void InputBox::OnClose(wxCloseEvent& WXUNUSED(event)) {
 }
 
 void InputBox::OnButton1(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button1->GetLabel().c_str());
-	else wxPrintf(wxT("1\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button1->GetLabel().utf8_str().data());
+	else printf("1\n");
 
-	wxPrintf(wxT("%s"), m_inputBox->GetValue().c_str());
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	printf("%s", m_inputBox->GetValue().utf8_str().data());
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnButton2(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button3->GetLabel().c_str());
-	else wxPrintf(wxT("2\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button3->GetLabel().utf8_str().data());
+	else printf("2\n");
 
-	wxPrintf(wxT("%s"), m_inputBox->GetValue().c_str());
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	printf("%s", m_inputBox->GetValue().utf8_str().data());
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnButton3(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button3->GetLabel().c_str());
-	else wxPrintf(wxT("3\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button3->GetLabel().utf8_str().data());
+	else printf("3\n");
 
-	wxPrintf(wxT("%s\n"), m_inputBox->GetValue().c_str());
+	printf("%s\n", m_inputBox->GetValue().utf8_str().data());
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void InputBox::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("timeout"));
-	else wxPrintf(wxT("0"));
+	if (m_options.HasOption(wxT("string-output"))) printf("timeout");
+	else printf("0");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	Close(); // Dlg is top window, so this ends the app.
 }
 

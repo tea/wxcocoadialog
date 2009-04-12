@@ -36,17 +36,17 @@ void CocoaDialogApp::ShowColourDialog() const {
 	// Output result
 	const wxColour selectedColour = dlg.GetColourData().GetColour();
 	if (m_optionDict.HasOption(wxT("output-rgb"))) {
-		wxPrintf(wxT("%d\n%d\n%d"), selectedColour.Red(), selectedColour.Green(), selectedColour.Blue());
+		printf("%d\n%d\n%d", selectedColour.Red(), selectedColour.Green(), selectedColour.Blue());
 	}
 	else if (m_optionDict.HasOption(wxT("output-css"))) {
 		const wxString outputColour = selectedColour.GetAsString(wxC2S_CSS_SYNTAX);
-		wxPrintf(wxT("%s"), outputColour.c_str());
+		printf("%s", outputColour.utf8_str().data());
 	}
 	else {
 		const wxString outputColour = selectedColour.GetAsString(wxC2S_HTML_SYNTAX);
-		wxPrintf(wxT("%s"), outputColour.c_str());
+		printf("%s", outputColour.utf8_str().data());
 	}
 
-	if (!m_optionDict.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_optionDict.HasOption(wxT("no-newline"))) printf("\n");
 }
 

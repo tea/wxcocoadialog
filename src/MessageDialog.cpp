@@ -74,7 +74,7 @@ MessageDialog::MessageDialog(wxWindow* parent, const OptionDict& options, bool d
 		bmp = wxBitmap(image);
 		if (!bmp.IsOk())
 		{
-			wxPrintf(wxT("The image could not be loaded...\n"));
+			printf("The image could not be loaded...\n");
 		}
 	}
 
@@ -148,36 +148,36 @@ void MessageDialog::OnClose(wxCloseEvent& WXUNUSED(event)) {
 }
 
 void MessageDialog::OnButton1(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s"), m_button1->GetLabel().c_str());
-	else wxPrintf(wxT("1"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s", m_button1->GetLabel().utf8_str().data());
+	else printf("1");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnButton2(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s"), m_button3->GetLabel().c_str());
-	else wxPrintf(wxT("2"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s", m_button3->GetLabel().utf8_str().data());
+	else printf("2");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnButton3(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s"), m_button3->GetLabel().c_str());
-	else wxPrintf(wxT("3"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s", m_button3->GetLabel().utf8_str().data());
+	else printf("3");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	Close(); // Dlg is top window, so this ends the app.
 }
 
 void MessageDialog::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("timeout"));
-	else wxPrintf(wxT("0"));
+	if (m_options.HasOption(wxT("string-output"))) printf("timeout");
+	else printf("0");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	Close(); // Dlg is top window, so this ends the app.
 }
 

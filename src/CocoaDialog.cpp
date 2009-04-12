@@ -166,81 +166,81 @@ int CocoaDialogApp::OnExit() {
 }
 
 bool CocoaDialogApp::OptionError(const wxString& error) const {
-	wxPrintf(wxT("Invalid options:\n\n"));
+	printf("Invalid options:\n\n");
 	
-	if (!error.empty()) wxPrintf(wxT("%s"), error.c_str());
+	if (!error.empty()) printf("%s", error.utf8_str().data());
 	
-	wxPrintf(wxT("\n"));
+	printf("\n");
 	OptionHelp();
 
 	return false;
 }
 
 bool CocoaDialogApp::OptionHelp(const wxString& runmode) const {
-	wxPrintf(wxT("HELP!\n\n"));
+	printf("HELP!\n\n");
 	if (!runmode.empty())
 	{
 		if (runmode == wxT("msgbox"))
 		{
-			wxPrintf(wxT("All available options:\n"));
-			wxPrintf(wxT("\t--icon-file\n"));
-			wxPrintf(wxT("\t--title\n"));
-			wxPrintf(wxT("\t--button2\n"));
-			wxPrintf(wxT("\t--string-output\n"));
-			wxPrintf(wxT("\t--help\n"));
-			wxPrintf(wxT("\t--debug\n"));
-			wxPrintf(wxT("\t--icon\n"));
-			wxPrintf(wxT("\t...\n"));
+			printf("All available options:\n");
+			printf("\t--icon-file\n");
+			printf("\t--title\n");
+			printf("\t--button2\n");
+			printf("\t--string-output\n");
+			printf("\t--help\n");
+			printf("\t--debug\n");
+			printf("\t--icon\n");
+			printf("\t...\n");
 		}
 		else if (runmode == wxT("ok-msgbox"))
 		{
-			wxPrintf(wxT("All available options:\n"));
-			wxPrintf(wxT("\t--icon-file\n"));
-			wxPrintf(wxT("\t--title\n"));
-			wxPrintf(wxT("\t--button2\n"));
-			wxPrintf(wxT("\t--string-output\n"));
-			wxPrintf(wxT("\t--help\n"));
-			wxPrintf(wxT("\t--debug\n"));
-			wxPrintf(wxT("\t--icon\n"));
-			wxPrintf(wxT("\t...\n"));
+			printf("All available options:\n");
+			printf("\t--icon-file\n");
+			printf("\t--title\n");
+			printf("\t--button2\n");
+			printf("\t--string-output\n");
+			printf("\t--help\n");
+			printf("\t--debug\n");
+			printf("\t--icon\n");
+			printf("\t...\n");
 		}
 		else if (runmode == wxT("yesno-msgbox"))
 		{
-			wxPrintf(wxT("All available options:\n"));
-			wxPrintf(wxT("\t--icon-file\n"));
-			wxPrintf(wxT("\t--title\n"));
-			wxPrintf(wxT("\t--button2\n"));
-			wxPrintf(wxT("\t--string-output\n"));
-			wxPrintf(wxT("\t--help\n"));
-			wxPrintf(wxT("\t--debug\n"));
-			wxPrintf(wxT("\t--icon\n"));
-			wxPrintf(wxT("\t...\n"));
+			printf("All available options:\n");
+			printf("\t--icon-file\n");
+			printf("\t--title\n");
+			printf("\t--button2\n");
+			printf("\t--string-output\n");
+			printf("\t--help\n");
+			printf("\t--debug\n");
+			printf("\t--icon\n");
+			printf("\t...\n");
 		}
 		else if (runmode == wxT("textbox"))
 		{
-			wxPrintf(wxT("\t--text\n"));
-			wxPrintf(wxT("\t--text-from-file\n"));
-			wxPrintf(wxT("\t--informative-text\n"));
-			wxPrintf(wxT("\t--button1\n"));
-			wxPrintf(wxT("\t--button2\n"));
-			wxPrintf(wxT("\t--button3\n"));
-			wxPrintf(wxT("\t--editable\n"));
-			wxPrintf(wxT("\t--focus-textbox\n"));
-			wxPrintf(wxT("\t--selected\n"));
-			wxPrintf(wxT("\t--scroll-to\n"));
-			wxPrintf(wxT("\t--float\n"));
-			wxPrintf(wxT("\t--timeout\n"));
+			printf("\t--text\n");
+			printf("\t--text-from-file\n");
+			printf("\t--informative-text\n");
+			printf("\t--button1\n");
+			printf("\t--button2\n");
+			printf("\t--button3\n");
+			printf("\t--editable\n");
+			printf("\t--focus-textbox\n");
+			printf("\t--selected\n");
+			printf("\t--scroll-to\n");
+			printf("\t--float\n");
+			printf("\t--timeout\n");
 		}
 	}
 
-	wxPrintf(wxT("Usage: Cocoadialog type [options]\n"));
-	wxPrintf(wxT("\tAvailable types:\n"));
-	wxPrintf(wxT("\t\tinputbox, secure-inputbox, standard-inputbox, secure-standard-inputbox\n"));
-	wxPrintf(wxT("\t\tprogressbar, dropdown, standard-dropdown, msgbox\n"));
-	wxPrintf(wxT("\tGlobal Options:\n"));
-	wxPrintf(wxT("\t\t--help, --debug, --title, --width, --height\n"));
-	wxPrintf(wxT("\t\t--string-output, --no-newline\n\n"));
-//	wxPrintf(wxT("See ... for detailed documentation\n"));
+	printf("Usage: Cocoadialog type [options]\n");
+	printf("\tAvailable types:\n");
+	printf("\t\tinputbox, secure-inputbox, standard-inputbox, secure-standard-inputbox\n");
+	printf("\t\tprogressbar, dropdown, standard-dropdown, msgbox\n");
+	printf("\tGlobal Options:\n");
+	printf("\t\t--help, --debug, --title, --width, --height\n");
+	printf("\t\t--string-output, --no-newline\n\n");
+//	printf("See ... for detailed documentation\n"));
 
 	return false;
 }

@@ -58,10 +58,10 @@ void CocoaDialogApp::ShowPopupMenu() const {
 	// TODO: Implement for other platforms than windows
 
 	if (res != 0) {
-		if (m_optionDict.HasOption(wxT("string-output"))) wxPrintf(wxT("%s"), menu.GetLabel(res).c_str());
-		else wxPrintf(wxT("%d"), res);
+		if (m_optionDict.HasOption(wxT("string-output"))) printf("%s", menu.GetLabel(res).utf8_str().data());
+		else printf("%d", res);
 
-		if (!m_optionDict.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+		if (!m_optionDict.HasOption(wxT("no-newline"))) printf("\n");
 	}
 	
 	// If we have a parent, we want to pass focus to it before closing

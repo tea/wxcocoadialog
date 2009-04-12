@@ -117,8 +117,8 @@ void HtmlDialog::OnBeforeLoad(IHtmlWndBeforeLoadEvent& event) {
 		// Remove trailing '/' (added by ie)
 		if (output.EndsWith(wxT("/"))) output.RemoveLast();
 
-		wxPrintf(wxT("%s"), output.c_str());
-		if (!m_optionDict.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+		printf("%s", output.utf8_str().data());
+		if (!m_optionDict.HasOption(wxT("no-newline"))) printf("\n");
 
 		// Don't try to open it in browser
 		event.Cancel(true);

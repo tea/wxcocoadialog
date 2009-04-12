@@ -78,11 +78,11 @@ void DropdownBox::PrintValue() const {
 	const int ndx = m_dropdownBox->GetSelection();
 
 	if (m_options.HasOption(wxT("string-output"))) {
-		wxPrintf(wxT("%s"), m_items[ndx].c_str());
+		printf("%s", m_items[ndx].utf8_str().data());
 	}
-	else wxPrintf(wxT("%d"), ndx);
+	else printf("%d", ndx);
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 }
 
 void DropdownBox::OnClose(wxCloseEvent& WXUNUSED(event)) {
@@ -103,7 +103,7 @@ void DropdownBox::OnClose(wxCloseEvent& WXUNUSED(event)) {
 
 void DropdownBox::OnSelection(wxCommandEvent& WXUNUSED(event)) {
 	if (m_options.HasOption(wxT("exit-onchange"))) {
-		wxPrintf(wxT("4\n"));
+		printf("4\n");
 
 		PrintValue();
 
@@ -112,8 +112,8 @@ void DropdownBox::OnSelection(wxCommandEvent& WXUNUSED(event)) {
 }
 
 void DropdownBox::OnButton1(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button1->GetLabel().c_str());
-	else wxPrintf(wxT("1\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button1->GetLabel().utf8_str().data());
+	else printf("1\n");
 
 	PrintValue();
 	
@@ -121,8 +121,8 @@ void DropdownBox::OnButton1(wxCommandEvent& WXUNUSED(event)) {
 }
 
 void DropdownBox::OnButton2(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button2->GetLabel().c_str());
-	else wxPrintf(wxT("2\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button2->GetLabel().utf8_str().data());
+	else printf("2\n");
 
 	PrintValue();
 	
@@ -130,8 +130,8 @@ void DropdownBox::OnButton2(wxCommandEvent& WXUNUSED(event)) {
 }
 
 void DropdownBox::OnButton3(wxCommandEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("%s\n"), m_button3->GetLabel().c_str());
-	else wxPrintf(wxT("3\n"));
+	if (m_options.HasOption(wxT("string-output"))) printf("%s\n", m_button3->GetLabel().utf8_str().data());
+	else printf("3\n");
 
 	PrintValue();
 	
@@ -139,10 +139,10 @@ void DropdownBox::OnButton3(wxCommandEvent& WXUNUSED(event)) {
 }
 
 void DropdownBox::OnTimeout(wxTimerEvent& WXUNUSED(event)) {
-	if (m_options.HasOption(wxT("string-output"))) wxPrintf(wxT("timeout"));
-	else wxPrintf(wxT("0"));
+	if (m_options.HasOption(wxT("string-output"))) printf("timeout");
+	else printf("0");
 
-	if (!m_options.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
+	if (!m_options.HasOption(wxT("no-newline"))) printf("\n");
 	Close(); // Dlg is top window, so this ends the app.
 }
 
