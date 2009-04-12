@@ -2,7 +2,7 @@
 #define __HTMLDIALOG_H__
 
 #include "OptionDict.h"
-#include "IEHtmlWin.h"
+#include "IHtmlWnd.h"
 
 class HtmlDialog : public wxDialog {
 public:
@@ -11,7 +11,7 @@ public:
 private:
 	// Event handlers
 	void OnClose(wxCloseEvent& event);
-	void OnMSHTMLBeforeNavigate2X(wxActiveXEvent& event);
+	void OnBeforeLoad(IHtmlWndBeforeLoadEvent& event);
 	DECLARE_EVENT_TABLE()
 
 	// Support functions
@@ -20,7 +20,7 @@ private:
 	static int HexToNumber(char hex);
 
 	// Member Ctrls
-	wxIEHtmlWin* m_ie;
+	IHtmlWnd* m_browser;
 
 	// Member variables
 	const OptionDict& m_optionDict;

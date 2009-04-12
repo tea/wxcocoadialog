@@ -29,20 +29,14 @@
 using namespace std;
 
 #include "wxactivex.h"
-
-
-enum wxIEHtmlRefreshLevel
-{
-	wxIEHTML_REFRESH_NORMAL = 0,
-	wxIEHTML_REFRESH_IFEXPIRED = 1,
-	wxIEHTML_REFRESH_CONTINUE = 2,
-	wxIEHTML_REFRESH_COMPLETELY = 3
-};
+#include "IHtmlWnd.h"
 
 class IStreamAdaptorBase;
 
-class wxIEHtmlWin : public wxActiveX
+class wxIEHtmlWin : public wxActiveX, public virtual IHtmlWnd
 {
+	DECLARE_EVENT_TABLE()
+
 public:
     wxIEHtmlWin(wxWindow * parent, wxWindowID id = -1,
         const wxPoint& pos = wxDefaultPosition,
@@ -50,6 +44,8 @@ public:
         long style = wxNO_BORDER | wxWANTS_CHARS,
         const wxString& name = wxPanelNameStr);
 	virtual ~wxIEHtmlWin();
+
+	wxWindow* GetWindow();
 
 	void LoadUrl(const wxString &_url, const wxString &_frame = wxEmptyString, bool keepHistory=false);
     bool LoadString(wxString html);
@@ -68,20 +64,19 @@ public:
 	bool GoForward();
 	bool GoHome();
 	bool GoSearch();
-	bool Refresh(wxIEHtmlRefreshLevel level);
+	bool Refresh(wxHtmlRefreshLevel level);
 	bool Stop();
 
 	void RegisterAsDropTarget(bool _register);
 
 	void FreezeRedraw(bool on);
-
-	DECLARE_EVENT_TABLE();
-
 protected:
     void SetupBrowser();
     bool LoadStream(IStreamAdaptorBase *pstrm);
 
 	wxAutoOleInterface<IWebBrowser2>		m_webBrowser;
+private:
+	void OnMSHTMLBeforeNavigate2X(wxActiveXEvent& event);
 };
 
 #endif /* _IEHTMLWIN_H_ */

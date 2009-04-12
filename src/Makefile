@@ -35,20 +35,21 @@ INCLUDES = $(WXINCLUDES) $(OURINCLUDES) $(GTKINCLUDES)
 
 OURLIBPATHS = -L$(EXT_DIR)/lib
 WXLIBS = $(shell $(EXT_DIR)/bin/wx-config --libs)
+WEBKIT_LIBS = -lwxwebkit -lwebcore-wx -ljscore
 
-LIBS = $(OURLIBPATHS) -lcurl $(WXLIBS)
+LIBS = $(OURLIBPATHS) -lcurl $(WEBKIT_LIBS) $(WXLIBS)
 
-EXCEPT = HtmlDialog.cpp \
-         IEHtmlWin.cpp \
+# Exceptions which do not need to be compiled on linux
+EXCEPT = IEHtmlWin.cpp \
          wxactivex.cpp
 
 SRCS = $(filter-out $(EXCEPT), $(wildcard *.cpp))
 OBJS = $(SRCS:%.cpp=$(OUTDIR)/%.o)
 DEPS = $(SRCS:%.cpp=$(OUTDIR)/%.d)
 
-EXTOBJS = $(shell $(EXT_DIR)/bin/wx-config --linkdeps)
+EXTOBJS = $(shell $(EXT_DIR)/bin/wx-config --linkdeps) $(shell pkg-config --libs libxml-2.0 sqlite3 libxslt) $(shell icu-config --ldflags)
 
-CXXFLAGS += -Wall -fno-strict-aliasing -MD
+CXXFLAGS += -Wall -fno-strict-aliasing -DFEAT_BROWSER -MD
 
 .PHONY: all clean
 

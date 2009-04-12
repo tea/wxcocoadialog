@@ -3,6 +3,12 @@
 #include <wx/ffile.h>
 #include "Util.h"
 
+#if defined(__WXMSW__)
+	#include "IEHtmlWin.h"
+#elif defined(__WXGTK__)
+	#include "WebKitHtmlWnd.h"
+#endif
+
 // control id's
 enum
 {
@@ -11,7 +17,7 @@ enum
 
 BEGIN_EVENT_TABLE(HtmlDialog, wxDialog)
 	EVT_CLOSE(HtmlDialog::OnClose)
-	EVT_ACTIVEX(ID_MSHTML, "BeforeNavigate2", HtmlDialog::OnMSHTMLBeforeNavigate2X)
+	EVT_HTMLWND_BEFORE_LOAD(ID_MSHTML, HtmlDialog::OnBeforeLoad)
 END_EVENT_TABLE()
 
 HtmlDialog::HtmlDialog(wxWindow* parent, const OptionDict& options) 
@@ -21,8 +27,13 @@ HtmlDialog::HtmlDialog(wxWindow* parent, const OptionDict& options)
 	const wxString title = options.GetOption(wxT("title"));
 	SetTitle(options.GetOption(wxT("title")));
 
+#if defined (__WXMSW__)
 	// IE Control
-	m_ie = new wxIEHtmlWin(this, ID_MSHTML);
+	m_browser = new wxIEHtmlWin(this, ID_MSHTML);
+#elif defined (__WXGTK__)
+	// WebKit control
+	m_browser = new wxBrowser(this, ID_MSHTML);
+#endif
 
 	// Load html from file
 	if (options.HasOption(wxT("html-from-file")))
@@ -38,7 +49,7 @@ HtmlDialog::HtmlDialog(wxWindow* parent, const OptionDict& options)
 		wxFileName path(htmlFile);
 		path.MakeAbsolute();
 
-		m_ie->LoadUrl(path.GetFullPath());
+		m_browser->LoadUrl(path.GetFullPath());
 	}
 	else { // Load html for stdin
 		// Create temp file
@@ -55,12 +66,12 @@ HtmlDialog::HtmlDialog(wxWindow* parent, const OptionDict& options)
 		while ((c = getc(stdin)) != EOF) putc(c, fp);
 		tempFile.Close();
 
-		m_ie->LoadUrl(m_tempPath);
+		m_browser->LoadUrl(m_tempPath);
 	}
 
 	// Create layout
 	wxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
-	mainSizer->Add(m_ie, 1, wxEXPAND);
+	mainSizer->Add(m_browser->GetWindow(), 1, wxEXPAND);
 	SetSizer(mainSizer);
 
 	int width;
@@ -95,8 +106,8 @@ void HtmlDialog::OnClose(wxCloseEvent& WXUNUSED(event)) {
 	Destroy(); // Dlg is top window, so this ends the app.
 }
 
-void HtmlDialog::OnMSHTMLBeforeNavigate2X(wxActiveXEvent& event) {
- 	const wxString url = event[wxT("Url")];
+void HtmlDialog::OnBeforeLoad(IHtmlWndBeforeLoadEvent& event) {
+ 	const wxString url = event.GetURL();
 	if (url == wxT("about:blank"))
 		return;
 
@@ -110,7 +121,7 @@ void HtmlDialog::OnMSHTMLBeforeNavigate2X(wxActiveXEvent& event) {
 		if (!m_optionDict.HasOption(wxT("no-newline"))) wxPrintf(wxT("\n"));
 
 		// Don't try to open it in browser
-		event[wxT("Cancel")] = true;
+		event.Cancel(true);
 
 		Close();
 	}
